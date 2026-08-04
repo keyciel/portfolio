@@ -1,44 +1,29 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono, Playfair_Display } from 'next/font/google'
-import { ThemeProvider } from '@/components/theme-provider'
+import { Instrument_Sans, IBM_Plex_Mono } from 'next/font/google'
 import { Header } from '@/components/header'
 import './globals.css'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const instrument = Instrument_Sans({
+  variable: '--font-instrument',
   subsets: ['latin'],
+  display: 'swap',
 })
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const plexMono = IBM_Plex_Mono({
+  variable: '--font-plex-mono',
   subsets: ['latin'],
-})
-
-const playfair = Playfair_Display({
-  variable: '--font-heading-family',
-  subsets: ['latin'],
+  weight: ['400', '500'],
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
   title: {
-    default: 'Alex Chen — Full-Stack Developer',
-    template: '%s | Alex Chen',
+    default: 'Ken David — Building in Public',
+    template: '%s · Ken David',
   },
   description:
-    'Full-stack developer building scalable web applications with React, TypeScript, and Node.js.',
+    'IT student at Bulacan State University building web apps with React, TypeScript, and Node.js. A public lab of projects, tools, and devlog entries.',
 }
-
-const themeScript = `
-  (function() {
-    var theme = localStorage.getItem('theme');
-    var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-    if (theme === 'light' || (!theme && prefersLight)) {
-      document.documentElement.classList.remove('dark');
-    } else {
-      document.documentElement.classList.add('dark');
-    }
-  })();
-`
 
 export default function RootLayout({
   children,
@@ -46,19 +31,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable}`}
-      suppressHydrationWarning
-    >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
-      <body className="min-h-screen bg-background text-foreground font-sans antialiased">
-        <ThemeProvider>
-          <Header />
-          {children}
-        </ThemeProvider>
+    <html lang="en" className={`${instrument.variable} ${plexMono.variable}`}>
+      <body className="min-h-screen bg-background font-sans text-foreground antialiased">
+        <Header />
+        <div className="lg:pl-56">{children}</div>
       </body>
     </html>
   )
